@@ -51,7 +51,7 @@ export default function Home() {
           <CloudSkyPanel
             image="/images/cloud-hero-blue.jpg"
             backgroundPosition="75% 38%"
-            overlay="linear-gradient(90deg, rgba(3,3,4,0.4) 0%, rgba(3,3,4,0.1) 42%, rgba(3,3,4,0.02) 65%, rgba(3,3,4,0.18) 100%)"
+            overlay="linear-gradient(90deg, rgba(3,3,4,0.01) 0%, rgba(3,3,4,0.01) 22%, rgba(3,3,4,0.01) 35%, rgba(3,3,4,0.01) 100%)"
             dotDensity={190}
             brightnessThreshold={0.62}
             vignetteStops={[
@@ -77,7 +77,7 @@ export default function Home() {
             transition={{ duration: 0.7, delay: 0.2, ease }}
             className="font-mono text-[11px] uppercase tracking-[0.3em] text-blue-glow drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)]"
           >
-            Risk &amp; Fraud Analyst · Creative Technologist
+            Risk &amp; Fraud Analyst
           </motion.p>
 
           <motion.h1
