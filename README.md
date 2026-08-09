@@ -1,6 +1,32 @@
-# Ayan Mukherjee — Portfolio
+<div align="center">
 
-React + Vite + TypeScript + Tailwind CSS + Framer Motion. No backend — everything (including the contact form) runs client-side, so it deploys as a plain static site.
+# AYAN.MUKHERJEE
+
+**Data by day. Light and pattern by night.**
+
+![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-6-646CFF?style=flat-square&logo=vite&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=flat-square&logo=framer&logoColor=white)
+![No backend](https://img.shields.io/badge/backend-none-lightgrey?style=flat-square)
+
+</div>
+
+---
+
+A personal site built to hold two people at once — the fraud analyst who ships production rules at LatentView, and the one who'd rather spend a weekend hand-rolling a cloud out of ten thousand canvas dots than watch one drift by.
+
+**I ~~build~~ try to build things.** This is one of them.
+
+## What's actually happening on screen
+
+Nothing here is a stock template effect — worth knowing before you go looking for the library that did it, because there isn't one.
+
+- **The hero photo isn't just a background.** Every glowing dot on it is sampled live from the image's own brightness and color, capped to a fixed grid, and animated with real independent per-dot twinkle — not a CSS trick, not a GIF.
+- **The footer's clouds are made of literal characters.** `. : - = + * # % @`, density-mapped from a hand-rolled noise field, slowly "breathing," with a genuine mouse-reactive ripple that disturbs the field on contact.
+- **Every glow on this site is real additive bloom** — draw sharp → blur at a couple of radii → composite back with `globalCompositeOperation: "lighter"`. `box-shadow` was never involved.
+- **No backend, anywhere.** The contact form posts straight to Web3Forms client-side; the whole site ships as a static `dist/` folder.
 
 ## Run it locally
 
@@ -9,78 +35,60 @@ npm install
 npm run dev
 ```
 
-Then open the printed localhost URL. To build for production:
+Open the printed localhost URL. For a production build:
 
 ```bash
 npm run build
-npm run preview   # serves the production build locally, from dist/
+npm run preview   # serves dist/ locally
 ```
 
 ## Structure
 
-- `src/pages/Home.tsx` — hero (cloud photo + dot-matrix reveal), two-sides section, toolkit, featured project spotlight, other projects.
-- `src/pages/Career.tsx` — full experience timeline, leadership, education, certifications, skills.
-- `src/pages/Projects.tsx` — all projects, Visualizer featured at top.
-- `src/components/CloudSkyPanel.tsx` — real photo + a glowing dot-matrix layer sampled from the image's own brightness/color, used in the hero. Reusable — pass `image`, `brightnessThreshold` (how much of the photo counts as "bright enough" to dot — tune per-image), `interactive` (dots brighten near the cursor), and `ambientDrift` (a slow spatial-noise shimmer across the grid).
-- `src/components/AsciiCloudPanel.tsx` — the pure character-based flowing cloud used in the footer, with a mouse-ripple disturbance.
-- `src/components/AmbientFlow.tsx` — the faint glowing ASCII current in the page background between hero and footer.
-- `src/components/ReachOutTab.tsx` — the expanding contact tab (opens the visitor's email client via `mailto:`, prefilled — no backend needed).
-- `src/data/content.ts` — all copy (experience, education, projects, interests, skills) lives here. Edit this file to update content without touching layout code.
-
-## Things you'll probably want to personalize
-
-- `src/data/content.ts` → `profile.github` / `profile.linkedin` are placeholders (`https://github.com`, `https://linkedin.com`) — swap in your real profile URLs.
-- The Visualizer project card links to `https://visualizer-ten-drab.vercel.app/` — update if the URL changes.
-- `public/favicon.svg` is a small placeholder dot-cluster mark — swap it for a real logomark if you have one.
-
-## Notes on the effects
-
-- The dot-matrix, ASCII cloud, and ambient current all use **real additive bloom**: bright shapes are drawn small and sharp to an offscreen canvas, then blurred copies of that canvas are composited back on top with `globalCompositeOperation = "lighter"` at a few different blur radii. That's what gives the glow real falloff instead of a flat CSS `box-shadow` ring.
-- `CloudSkyPanel`'s `brightnessThreshold` is photo-dependent — it's a cutoff on 0–1 luminance, not a percentage. If you swap in a different hero photo and the dots end up covering the whole image (or barely showing at all), sample the new photo's actual brightness distribution and adjust the threshold to sit around its 75th–85th percentile so dots concentrate on the brightest subject.
-- Everything respects `prefers-reduced-motion`.
-
-## Deploying
-
-This is a static site (`dist/` after `npm run build`) — any static host works.
-
-### Option A — Cloudflare Workers (what this repo is set up for)
-
-Cloudflare merged "Pages" into a unified Workers product with a Wrangler-based deploy flow. This repo already includes `wrangler.jsonc` configured for it:
-
-```jsonc
-{
-  "name": "cloud-studios",
-  "compatibility_date": "2026-08-09",
-  "assets": {
-    "directory": "./dist",
-    "not_found_handling": "single-page-application"
-  }
-}
+```
+src/
+├─ pages/
+│  ├─ Home.tsx          hero, two-sides, toolkit, featured work, more projects
+│  ├─ Career.tsx         experience timeline, education, certifications, skills
+│  └─ Projects.tsx       every project, featured ones pinned to the top
+├─ components/
+│  ├─ CloudSkyPanel.tsx    photo + live dot-matrix reveal (the hero effect)
+│  ├─ AsciiCloudPanel.tsx  character-based flowing cloud (the footer effect)
+│  ├─ AmbientFlow.tsx      faint glowing ASCII current between hero & footer
+│  └─ ReachOutTab.tsx      the expanding contact tab → Web3Forms
+└─ data/
+   └─ content.ts          every word of copy — experience, projects, skills, interests
 ```
 
-1. Push this project to a GitHub (or GitLab) repo.
-2. [Cloudflare dashboard](https://dash.cloudflare.com) → **Workers & Pages** → **Create** → connect the repo.
-3. Settings:
-   - **Project name**: must exactly match `"name"` in `wrangler.jsonc` (`cloud-studios`) — a mismatch fails the build.
-   - **Build command**: `npm run build`
-   - **Deploy command**: `npx wrangler deploy` (default — leave as-is)
-4. Deploy. You'll get a free `*.workers.dev` URL immediately.
-5. For your own domain: once deployed, go to the project's **Settings** → **Domains & Routes** (or **Custom domains**) → add it. One click if the domain's DNS is already on Cloudflare; otherwise add the CNAME/record Cloudflare gives you at your current registrar.
+`content.ts` is the one file you'll touch most. Update it and the layout takes care of itself.
 
-**Why `not_found_handling: "single-page-application"` matters:** this site uses client-side routing (`/career`, `/projects`). Without it, refreshing or directly visiting those URLs would 404 — the server doesn't know those routes exist, only `index.html` does. This setting tells Workers to serve `index.html` for any unmatched path instead of a hard 404, and it's already wired up in `wrangler.jsonc`.
+## Make it yours
 
-**Note:** an older `public/_redirects` file (the mechanism the previous Pages product used for this same job) has been deliberately removed from this repo — it actively conflicts with `not_found_handling` and will fail the deploy with an "infinite loop" error if both are present. Don't re-add it.
+- `content.ts` → `profile.github` / `profile.linkedin` are placeholders — swap in the real ones.
+- `content.ts` → `profile.web3formsAccessKey` needs a real key from [web3forms.com](https://web3forms.com) (free, just an email) or the contact form quietly falls back to opening the visitor's mail app instead of landing in your inbox.
+- The Visualizer card links to `https://visualizer-ten-drab.vercel.app/` — update if that ever moves.
+- `public/favicon.svg` is a small dot-cluster mark — swap the file (same name) for anything else, or point `index.html` at a new one.
 
-### Option B — Netlify
+## How the glow actually works
 
-Also free, and the fastest path if you don't want to touch git or Wrangler config at all — Netlify still uses the simpler build-command + output-directory model.
+- `CloudSkyPanel`'s `brightnessThreshold` is a **luminance cutoff (0–1), not a percentage** — and it's photo-dependent. Swap in a different hero image and the dots will either blanket the whole thing or barely show up until you retune this. Sample the new photo's real brightness distribution and set the threshold around its 75th–85th percentile so dots concentrate on the brightest subject instead of guessing.
+- Every animated layer respects `prefers-reduced-motion` where the motion is spatial (things moving). Pure brightness pulsing is left on regardless, since it isn't the kind of motion that setting exists to prevent.
 
-1. `npm run build` locally.
-2. Go to [app.netlify.com/drop](https://app.netlify.com/drop) and drag the `dist/` folder in. It's live immediately at a `*.netlify.app` URL.
-3. For your own domain: **Site settings** → **Domain management** → **Add a domain**, then update your DNS (Netlify shows you exactly which records to add wherever you bought the domain).
-4. For automatic redeploys on every change, connect the repo instead (**Add new site** → **Import an existing project**), with build command `npm run build` and publish directory `dist`.
-5. If you go this route, you'll want to re-add a `public/_redirects` file containing `/* /index.html 200` — Netlify uses that mechanism instead of `wrangler.jsonc`, and it won't conflict with anything since Wrangler/Cloudflare won't be involved.
+## Shipping it
 
-### Buying a domain
+Static output (`dist/`) — any static host works. This repo ships pre-configured for two:
 
-If you don't have one yet: Cloudflare Registrar (at-cost, no renewal markup), Porkbun, and Namecheap are all reasonable, inexpensive options. A `.com` or `.dev` both suit a personal portfolio fine — `.dev` domains require HTTPS, which both options above provide automatically anyway.
+**Cloudflare Workers** — `wrangler.jsonc` is already set up (`assets.not_found_handling: "single-page-application"` handles the client-side routing fallback). Push to a repo, connect it in the Cloudflare dashboard, build command `npm run build`, deploy command `npx wrangler deploy`, project name must match `"name"` in `wrangler.jsonc`.
+
+**Vercel** — `vercel.json` handles the same SPA fallback via a rewrite rule (`/(.*)` → `/index.html`). Plain JSON doesn't support comments, so that reasoning lives here instead of in the file: without it, in-app navigation works fine, but a direct visit or refresh on `/career` would 404, since Vercel has no built-in SPA fallback for a plain Vite + React Router setup.
+
+Import the repo on Vercel, no other config needed — it's already in the file.
+
+Domain/DNS setup for either platform is the standard flow: add the domain in the project's dashboard settings, then point your DNS at what they give you.
+
+---
+
+<div align="center">
+
+Built with React, Tailwind, and an unreasonable number of `<canvas>` elements.
+
+</div>
