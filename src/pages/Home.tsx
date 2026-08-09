@@ -77,7 +77,7 @@ export default function Home() {
             transition={{ duration: 0.7, delay: 0.2, ease }}
             className="font-mono text-[11px] uppercase tracking-[0.3em] text-blue-glow drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)]"
           >
-            Risk &amp; Fraud Analyst
+            Risk &amp; Fraud Analyst · Creative Technologist
           </motion.p>
 
           <motion.h1

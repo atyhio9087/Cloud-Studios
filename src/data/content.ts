@@ -3,15 +3,15 @@ export const profile = {
   role: "Risk & Fraud Analyst — LatentView Analytics",
   location: "Chennai, India",
   email: "ayan.muk200267@gmail.com",
-  phone: "+91 8017405219",
-  linkedin: "https://www.linkedin.com/in/ayan-mukherjee-1a79a1192/",
-  github: "https://github.com/atyhio9087",
+  phone: "8017405219",
+  linkedin: "https://linkedin.com",
+  github: "https://github.com",
   // Get a free key at https://web3forms.com (enter your email, they send
   // you a key — no account needed). It's meant to live in client-side code,
   // same as a reCAPTCHA site key: Web3Forms enforces limits server-side,
   // not by keeping this secret. Messages get emailed straight to the
   // address you registered it with.
-  web3formsAccessKey: "e43b4b99-bcef-40e6-9386-936aa0c5e434",
+  web3formsAccessKey: "YOUR_WEB3FORMS_ACCESS_KEY",
   blurb:
     "I spend my days turning marketplace data into fraud signal, and my nights turning light and pattern into things you can watch move.",
 };
@@ -141,7 +141,7 @@ export const projects: Project[] = [
     year: "2026",
     tagline: "Horizon-aware price forecasting — with the receipts.",
     description:
-      "Full-stack stock forecasting platform for 112 US stocks across 1D–1Y horizons, using cross-sectional LightGBM with SHAP explanations, confidence bands, and time-based validation. Achieves ~51–56% short-term accuracy and 68.6% at 1 year, with transparent diagnostics and a separate sentiment/fundamentals reputation score.",
+      "A full-stack forecasting platform predicting direction and expected return across four horizons (1 day to 1 year) for 112 liquid US stocks, using LightGBM models trained cross-sectionally so they learn general market behaviour instead of memorizing one ticker's history. Every prediction ships with a SHAP-based plain-language explanation, a p10/p50/p90 confidence band, and a separate 0–100 reputation score (news sentiment via FinBERT, fundamentals, momentum vs the S&P 500) that's deliberately kept out of the trained model for transparency. Validation is strictly time-based with embargo gaps and a held-out test window, and the results are reported honestly rather than dressed up: modest edge at short horizons (~51–56% directional accuracy — realistic for near-efficient markets) versus genuine signal at the 1-year horizon (68.6% test accuracy, a +7.5% MAE improvement over a naive baseline). The frontend supports ticker search, horizon switching, confidence-band charting, and a /diagnostics page that surfaces the honest train/val/test metrics on purpose.",
     tags: ["LightGBM", "SHAP", "Time-Series ML", "React", "Recharts"],
     // TODO: swap for the real deployed URL once it's hosted
     url: "https://stock-predictor.example.com",

@@ -41,36 +41,46 @@ npm run preview   # serves the production build locally, from dist/
 
 ## Deploying
 
-This is a static site (`dist/` after `npm run build`) — any static host works. Two good options that support a custom domain on their free tier:
+This is a static site (`dist/` after `npm run build`) — any static host works.
 
-### Option A — Cloudflare Pages (recommended)
+### Option A — Cloudflare Workers (what this repo is set up for)
 
-Fast global CDN, generous free tier, easy custom domains, and if you buy your domain through Cloudflare Registrar it's sold at cost (no markup).
+Cloudflare merged "Pages" into a unified Workers product with a Wrangler-based deploy flow. This repo already includes `wrangler.jsonc` configured for it:
+
+```jsonc
+{
+  "name": "cloud-studios",
+  "compatibility_date": "2026-08-09",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
+```
 
 1. Push this project to a GitHub (or GitLab) repo.
-2. In the [Cloudflare dashboard](https://dash.cloudflare.com) → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**, pick the repo.
-3. Build settings:
-   - Framework preset: **Vite**
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-4. Deploy. You'll get a free `*.pages.dev` URL immediately.
-5. For your own domain: **Pages project** → **Custom domains** → **Set up a domain**. If the domain's DNS is already on Cloudflare, this is one click. If it's registered elsewhere, either move DNS to Cloudflare (free) or add the CNAME record Cloudflare gives you at your current registrar.
+2. [Cloudflare dashboard](https://dash.cloudflare.com) → **Workers & Pages** → **Create** → connect the repo.
+3. Settings:
+   - **Project name**: must exactly match `"name"` in `wrangler.jsonc` (`cloud-studios`) — a mismatch fails the build.
+   - **Build command**: `npm run build`
+   - **Deploy command**: `npx wrangler deploy` (default — leave as-is)
+4. Deploy. You'll get a free `*.workers.dev` URL immediately.
+5. For your own domain: once deployed, go to the project's **Settings** → **Domains & Routes** (or **Custom domains**) → add it. One click if the domain's DNS is already on Cloudflare; otherwise add the CNAME/record Cloudflare gives you at your current registrar.
 
-No git repo yet? Cloudflare Pages also supports direct upload — drag the `dist/` folder into the dashboard instead of connecting a repo. You'll just need to re-upload manually on future changes instead of getting automatic deploys.
+**Why `not_found_handling: "single-page-application"` matters:** this site uses client-side routing (`/career`, `/projects`). Without it, refreshing or directly visiting those URLs would 404 — the server doesn't know those routes exist, only `index.html` does. This setting tells Workers to serve `index.html` for any unmatched path instead of a hard 404, and it's already wired up in `wrangler.jsonc`.
+
+**Note:** an older `public/_redirects` file (the mechanism the previous Pages product used for this same job) has been deliberately removed from this repo — it actively conflicts with `not_found_handling` and will fail the deploy with an "infinite loop" error if both are present. Don't re-add it.
 
 ### Option B — Netlify
 
-Also free, and the fastest path if you don't want to touch git at all.
+Also free, and the fastest path if you don't want to touch git or Wrangler config at all — Netlify still uses the simpler build-command + output-directory model.
 
 1. `npm run build` locally.
 2. Go to [app.netlify.com/drop](https://app.netlify.com/drop) and drag the `dist/` folder in. It's live immediately at a `*.netlify.app` URL.
 3. For your own domain: **Site settings** → **Domain management** → **Add a domain**, then update your DNS (Netlify shows you exactly which records to add wherever you bought the domain).
-4. For automatic redeploys on every change, connect the repo instead (**Add new site** → **Import an existing project**) with the same build command/output as above.
+4. For automatic redeploys on every change, connect the repo instead (**Add new site** → **Import an existing project**), with build command `npm run build` and publish directory `dist`.
+5. If you go this route, you'll want to re-add a `public/_redirects` file containing `/* /index.html 200` — Netlify uses that mechanism instead of `wrangler.jsonc`, and it won't conflict with anything since Wrangler/Cloudflare won't be involved.
 
 ### Buying a domain
 
-If you don't have one yet: Cloudflare Registrar (at-cost, no renewal markup), Porkbun, and Namecheap are all reasonable, inexpensive options. A `.com` or `.dev` both suit a personal portfolio fine — `.dev` domains require HTTPS, which both Cloudflare Pages and Netlify provide automatically anyway.
-
-### Why the `_redirects` file matters
-
-`public/_redirects` contains one line (`/*  /index.html  200`). This site uses client-side routing (`/career`, `/projects`), and without that file, refreshing or directly visiting those URLs on a static host would 404 — the server doesn't know those routes exist, only `index.html` does. Both Cloudflare Pages and Netlify read this file automatically; it's already wired up and included in every build.
+If you don't have one yet: Cloudflare Registrar (at-cost, no renewal markup), Porkbun, and Namecheap are all reasonable, inexpensive options. A `.com` or `.dev` both suit a personal portfolio fine — `.dev` domains require HTTPS, which both options above provide automatically anyway.
