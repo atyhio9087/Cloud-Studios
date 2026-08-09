@@ -169,6 +169,16 @@ export const projects: Project[] = [
     // TODO: replace with the real GitHub repo URL
     url: "https://github.com/ayanmukherjee/us-airport-performance",
   },
+  {
+  slug: "medical-image-3d-view",
+  title: "Medical Imaging & Robotic Path Planning",
+  year: "2026",
+  tagline: "From medical scans to interactive 3D anatomy and collision-aware paths.",
+  description:
+    "A medical imaging workstation that reconstructs 3D anatomy from MRI/CT volumes, enables synchronized 2D slicing and 3D visualization, and plans risk-aware paths around critical structures using A*, RRT*, and RRT.",
+  tags: ["Medical Imaging", "3D Reconstruction", "Path Planning", "Three.js", "FastAPI", "Python"],
+  url: "https://github.com/atyhio9087/medical-image-3d-view",
+},
 ];
 
 export type Make = {
