@@ -141,9 +141,9 @@ export default function CloudSkyPanel({
             baseY: y,
             size: 0.85 + lum * 2.1,
             maxAlpha,
-            color: `${cr},${cg},${cb}`,
+            color: "255,255,255", //`${cr},${cg},${cb}`,
             phase: hash2(x + 1000, y + 1000) * Math.PI * 2,
-            speed: 0.9 + hash2(x + 2000, y + 2000) * 1.7,
+            speed: 1.6 + hash2(x + 2000, y + 2000) * 1.7,
           });
         }
       }
