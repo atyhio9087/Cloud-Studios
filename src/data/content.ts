@@ -4,14 +4,14 @@ export const profile = {
   location: "Chennai, India",
   email: "ayan.muk200267@gmail.com",
   phone: "8017405219",
-  linkedin: "https://linkedin.com",
-  github: "https://github.com",
+  linkedin: "https://www.linkedin.com/in/ayan-mukherjee-1a79a1192/",
+  github: "https://github.com/atyhio9087",
   // Get a free key at https://web3forms.com (enter your email, they send
   // you a key — no account needed). It's meant to live in client-side code,
   // same as a reCAPTCHA site key: Web3Forms enforces limits server-side,
   // not by keeping this secret. Messages get emailed straight to the
   // address you registered it with.
-  web3formsAccessKey: "YOUR_WEB3FORMS_ACCESS_KEY",
+  web3formsAccessKey: "e43b4b99-bcef-40e6-9386-936aa0c5e434",
   blurb:
     "I spend my days turning marketplace data into fraud signal, and my nights turning light and pattern into things you can watch move.",
 };
@@ -144,7 +144,7 @@ export const projects: Project[] = [
       "Full-stack stock forecasting platform for 112 US stocks across 1D–1Y horizons, using cross-sectional LightGBM with SHAP explanations, confidence bands, and time-based validation. Achieves ~51–56% short-term accuracy and 68.6% at 1 year, with transparent diagnostics and a separate sentiment/fundamentals reputation score.",
     tags: ["LightGBM", "SHAP", "Time-Series ML", "React", "Recharts"],
     // TODO: swap for the real deployed URL once it's hosted
-    url: "https://stock-predictor.example.com",
+    url: "https://github.com/atyhio9087/stock-market-prediction/tree/main",
     featured: true,
   },
   {
