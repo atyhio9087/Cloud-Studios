@@ -133,9 +133,9 @@ export default function CloudSkyPanel({
           if (maxAlpha < 0.02) continue;
           // boost the sampled color so dots read as glowing rather than muddy
           const boost = 1 + (1 - lum) * 0.4;
-          const cr = Math.min(255, Math.round(r * boost + 40));
-          const cg = Math.min(255, Math.round(g * boost + 25));
-          const cb = Math.min(255, Math.round(b * boost + 35));
+          // const cr = Math.min(255, Math.round(r * boost + 40));
+          // const cg = Math.min(255, Math.round(g * boost + 25));
+          // const cb = Math.min(255, Math.round(b * boost + 35));
           pts.push({
             baseX: x,
             baseY: y,
