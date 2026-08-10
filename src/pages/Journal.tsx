@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Pin } from "lucide-react";
 import { journalPosts, type JournalCategory } from "../data/journal";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -30,7 +30,10 @@ export default function Journal() {
   const [filter, setFilter] = useState<(typeof categories)[number]>("All");
   const posts = journalPosts
     .filter((p) => filter === "All" || p.category === filter)
-    .sort((a, b) => (a.date < b.date ? 1 : -1));
+    .sort((a, b) => {
+      if (!!a.pinned !== !!b.pinned) return a.pinned ? -1 : 1;
+      return a.date < b.date ? 1 : -1;
+    });
 
   return (
     <div className="mx-auto max-w-5xl px-5 pb-32 pt-36 sm:px-8 sm:pt-44">
@@ -67,8 +70,17 @@ export default function Journal() {
           <FadeUp key={p.slug} delay={i * 0.06}>
             <Link
               to={`/journal/${p.slug}`}
-              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-panel/50 p-6 transition-colors hover:border-white/25 sm:p-7"
+              className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border p-6 transition-colors sm:p-7 ${
+                p.pinned
+                  ? "border-ember/30 bg-ember/[0.06] hover:border-ember/50"
+                  : "border-white/10 bg-panel/50 hover:border-white/25"
+              }`}
             >
+              {p.pinned && (
+                <span className="absolute right-5 top-5 text-ember" aria-label="Pinned">
+                  <Pin size={14} className="rotate-45" fill="currentColor" />
+                </span>
+              )}
               <div className="flex items-baseline justify-between gap-2">
                 <span className="rounded-full bg-white/5 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-teal-soft">
                   {p.category}
