@@ -8,6 +8,7 @@ const links = [
   { to: "/", label: "Home" },
   { to: "/career", label: "Career" },
   { to: "/projects", label: "Projects" },
+  { to: "/journal", label: "Journal" },
 ];
 
 export default function Nav() {
@@ -36,7 +37,7 @@ export default function Nav() {
 
         <nav className="flex flex-none items-center gap-0.5 rounded-full border border-white/10 bg-void/60 px-1 py-1 backdrop-blur-md sm:gap-1 sm:px-1.5 sm:py-1.5">
           {links.map((l) => {
-            const active = pathname === l.to;
+            const active = pathname === l.to || (l.to !== "/" && pathname.startsWith(`${l.to}/`));
             return (
               <Link
                 key={l.to}

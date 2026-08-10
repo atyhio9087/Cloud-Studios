@@ -7,6 +7,8 @@ import { ReachOutProvider } from "./context/ReachOutContext";
 import Home from "./pages/Home";
 import Career from "./pages/Career";
 import Projects from "./pages/Projects";
+import Journal from "./pages/Journal";
+import JournalPost from "./pages/JournalPost";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -27,6 +29,8 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/career" element={<Career />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/journal" element={<Journal />} />
+          <Route path="/journal/:slug" element={<JournalPost />} />
         </Routes>
       </main>
       <Footer />
