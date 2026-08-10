@@ -11,6 +11,8 @@ export type JournalPost = {
   /** Optional stylized external link — a video, a repo, a longer writeup, etc. */
   link?: { label: string; url: string };
   tags?: string[];
+  /** Pinned posts always sort first on the journal list, regardless of date. */
+  pinned?: boolean;
 };
 
 export const journalPosts: JournalPost[] = [
@@ -20,6 +22,7 @@ export const journalPosts: JournalPost[] = [
     date: "2026-08-10",
     category: "Tech",
     excerpt: "Why this page exists, and what's going to end up here.",
+    pinned: true,
     body: [
       "This is where the longer-form stuff lives — write-ups that don't fit as a project card: how a model actually got tuned, why a woodworking joint failed twice before it held, notes from reading a paper that changed how I think about something.",
       "Expect a mix: technical breakdowns, research notes, and logs from whatever I'm building with my hands that week. No fixed schedule, no fixed length.",
